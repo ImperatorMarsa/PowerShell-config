@@ -3,21 +3,20 @@
 #
 
 ###ls
-function ls {
-    if (Test-Path (Get-Command eza -ErrorAction SilentlyContinue).Source) {
-        eza -1 --icons $args
-    } else {
-        & ls $args
-    }
-}
-
 if (Test-Path (Get-Command eza -ErrorAction SilentlyContinue).Source) {
+	function newls {
+	    eza -1 --icons $args
+	}
+
+	Remove-Item 'Alias:\ls' -Force;
+	New-Alias -Name 'ls' -Value 'newls' -Scope Global
+
 	function ll {
 	    eza -lh $args
 	}
 
 	function la {
-	    ll -a $args
+	    eza -ahl $args
 	}
 }
 
